@@ -1,13 +1,16 @@
+library(data.table)
+
+
+
 #Constraints for constrOptim
 #On the form: ui%*%theta >= ci
 # test_data <- matrix(rpois(100,8),nrow=10,ncol=10)
 # diag(test_data)<-0
 # 
-# test_data <- fread("C:/Users/niclo06/Dropbox/valued null networks/data2/7cont_nodiag.txt")
-# test_data <- as.matrix(test_data[,-1])
+test_data <- fread("C:/Users/niclo06/Dropbox/valued null networks/data2/7cont_nodiag.txt")
+test_data <- as.matrix(test_data[,-1])
 
-find_latent <- function(data, 
-                        optim_method="Nelder-Mead",
+find_latent <- function(data,
                         init_values = rep(0.5,length(data)),
                         type="weighted_directed"
                         ){
@@ -20,7 +23,7 @@ find_latent <- function(data,
   N <- length(data)
   
   #---------------------------------------------------------------
-  if(type=="weighted_directed"){
+  if(type == "weighted_directed"){
     
     #Set up constraints for constrOptim
     #This is simply a design matrix that follows
@@ -44,20 +47,20 @@ find_latent <- function(data,
     
     result <- constrOptim(theta = init_values,
                           data = data,
-                          f = dir_weighted_lkl,
+                          f = directed_weighted_lkl,
                           grad = NULL,
                           ui = ui,
                           ci = ci,
-                          method=optim_method,
+                          method="Nelder-Mead",
                           control=list(maxit=100000))
     
     
-  }else if(type="binary_undirected"){
+  } else if(type == "binary_undirected"){
     
     #Unconstrained optim, instead taking exponentials to force latent>0
     result <- optim(par = init_values,
                     data = data,
-                    fn=undir_bin_lkl,
+                    fn=undirected_binary_lkl,
                     method="CG",
                     control=list(maxit=1000))
   }
@@ -72,4 +75,4 @@ find_latent <- function(data,
   return(result$par)
 }
 
-
+first <- find_latent(data = test_data)
