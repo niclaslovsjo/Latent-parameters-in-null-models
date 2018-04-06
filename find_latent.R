@@ -73,11 +73,3 @@ find_latent <- function(data,
 }
 
 
-
-
-find_latent(data = test_data)->mm
-
-
-
-
-
