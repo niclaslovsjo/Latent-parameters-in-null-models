@@ -1,19 +1,12 @@
 library(data.table)
 
-
-
-#Constraints for constrOptim
-#On the form: ui%*%theta >= ci
-
-# 
-
 #----------------------------------------------------------------
 #Test-datasets
 # test_data <- matrix(rpois(100,8),nrow=10,ncol=10)
 # diag(test_data)<-0
 
-test_data <- fread("C:/Users/niclo06/Dropbox/valued null networks/data2/7cont_nodiag.txt")
-test_data <- as.matrix(test_data[,-1])
+# test_data <- fread("C:/Users/niclo06/Dropbox/valued null networks/data2/7cont_nodiag.txt")
+# test_data <- as.matrix(test_data[,-1])
 
 library(igraphdata)
 library(igraph)
@@ -98,4 +91,4 @@ find_latent <- function(data,
   return(result)
 }
 
-first <- find_latent(data = test_data,type = "weighted_directed")
+#first <- find_latent(data = test_data,type = "weighted_directed")
