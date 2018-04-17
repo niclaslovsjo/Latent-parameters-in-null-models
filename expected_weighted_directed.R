@@ -1,5 +1,5 @@
 #This takes a vector of latent variables and returns expected values
-
+options(digits=15)
 expected_weighted_directed <- function(param){
   
   n <- length(param)
